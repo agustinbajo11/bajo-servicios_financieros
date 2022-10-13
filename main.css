@@ -97,7 +97,7 @@ thead {
   border-color: #e3735e;
 }
 
-#frmPrestamo button {
+.inputButton {
   background: rgba(227, 115, 94, 90%);
   border: 2px solid #e3735e;
   border-radius: 4px;
