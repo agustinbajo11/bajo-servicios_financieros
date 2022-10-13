@@ -20,7 +20,7 @@
       <div class="header">
         <h2>¡Simulá, y desglosá en detalle tus préstamos, fácilmente!</h2>
       </div>
-      <div name="frmPrestamo" id="frmPrestamo">
+      <form name="frmPrestamo" id="frmPrestamo">
         <div class="control">
           <label for="nombre"
             >Nombre:
@@ -32,6 +32,10 @@
           /></label>
         </div>
         <div class="control">
+          <label for="reply_to">Email:</label>
+          <input type="text" name="reply_to" id="reply_to" />
+        </div>
+        <div class="control">
           <label for="fecha"
             >Fecha de inicio:
             <input
@@ -39,7 +43,8 @@
               name="fecha"
               id="fecha"
               placeholder="fecha de inicio"
-          /></label>
+            />
+          </label>
         </div>
         <div class="control">
           <label for="monto"
@@ -86,13 +91,13 @@
                   type="radio"
                   name="tipoPlazo"
                   id="mensual"
-                  value="mensual"
+                  value="meses"
                 />
                 <span class="circle"></span>
               </label>
               <label for="anual" class="radioContenedor"
                 >anual
-                <input type="radio" name="tipoPlazo" id="anual" value="anual" />
+                <input type="radio" name="tipoPlazo" id="anual" value="años" />
                 <span class="circle"></span>
               </label>
             </div>
@@ -108,8 +113,38 @@
           </label>
         </div>
 
-        <button id="simular" onclick="simular()">Simular</button>
-      </div>
+        <input type="submit" id="simular" value="Simular" class="inputButton"/>
+      </form>
+      <!-- <form id="form">
+        <div class="field">
+          <label for="nombre">nombre</label>
+          <input type="text" name="nombre" id="nombre" />
+        </div>
+        <div class="field">
+          <label for="monto">monto</label>
+          <input type="text" name="monto" id="monto" />
+        </div>
+        <div class="field">
+          <label for="periodo">periodo</label>
+          <input type="text" name="periodo" id="periodo" />
+        </div>
+        <div class="field">
+          <label for="interes">interes</label>
+          <input type="text" name="interes" id="interes" />
+        </div>
+        <div class="field">
+          <label for="plazo">plazo</label>
+          <input type="text" name="plazo" id="plazo" />
+        </div>
+
+        <input type="submit" id="button" value="Simular" />
+      </form> -->
+      <script type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    
+    <script type="text/javascript">
+      emailjs.init('WKriWbQ1WkAv4zIHr')
+    </script>
     </div>
 
     <div id="contenedorTabla">
@@ -126,4 +161,34 @@
       </div>
     </footer>
   </body>
+
+  <script>
+    const btn = document.getElementById("simular");
+
+    document
+      .getElementById("frmPrestamo")
+      .addEventListener("submit", function (event) {
+        event.preventDefault();
+        simular()
+
+        btn.value = "Simulando...";
+
+        
+   const serviceID = 'default_service';
+   const templateID = 'template_9thtewj';
+
+        emailjs.sendForm(serviceID, templateID, this).then(
+          () => {
+            btn.value = "Simular";
+            alert("Cotización enviada!");
+            window.location.reload();
+            
+          },
+          (err) => {
+            btn.value = "Simular";
+            alert(JSON.stringify(err));
+          }
+        );
+      });
+  </script>
 </html>
